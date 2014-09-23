@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="updateurl">http://192.168.0.100:8080/update.xml</string>
+    <string name="adressdburl">http://192.168.0.100:8080/mysafemobileaddress.db</string>
+    
+    <string name="SMSBackup">/SMSBackup</string>
+
+
+</resources>

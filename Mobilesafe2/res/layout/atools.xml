@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+        android:gravity="center_horizontal"
+        android:text="高级工具"
+        android:textColor="#666666"
+        android:textSize="28sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/devide_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_atools_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="手机号码归属地查询"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    >
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/listview_devider" />
+
+    <LinearLayout
+        android:id="@+id/ll_atools_sms_backup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="短信备份"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/listview_devider" />
+
+    <LinearLayout
+        android:id="@+id/ll_atools_sms_restore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="短信还原"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/listview_devider" />
+
+    <LinearLayout
+        android:id="@+id/ll_atools_applock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="程序锁"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/listview_devider" />
+
+    <LinearLayout
+        android:id="@+id/ll_atools_common_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="常用号码查询"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/listview_devider" />
+
+</LinearLayout>

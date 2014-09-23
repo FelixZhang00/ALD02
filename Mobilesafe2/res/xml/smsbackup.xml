@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<smss>
+
+    <sms>
+        <id>
+4
+        </id>
+
+        <address>
+321
+        </address>
+
+        <body>
+Fasong
+        </body>
+
+        <read>
+1
+        </read>
+
+        <type>
+2
+        </type>
+    </sms>
+    <sms>
+        <id>
+3
+        </id>
+
+        <address>
+123
+        </address>
+
+        <body>
+soujian yidu
+        </body>
+
+        <read>
+1
+        </read>
+
+        <type>
+1
+        </type>
+    </sms>
+    <sms>
+        <id>
+2
+        </id>
+
+        <address>
+122
+        </address>
+
+        <body>
+soujian weidu
+        </body>
+
+        <read>
+0
+        </read>
+
+        <type>
+1
+        </type>
+    </sms>
+    <sms>
+        <id>
+1
+        </id>
+
+        <address>
+122
+        </address>
+
+        <body>
+??
+        </body>
+
+        <read>
+0
+        </read>
+
+        <type>
+1
+        </type>
+    </sms>
+
+</smss>

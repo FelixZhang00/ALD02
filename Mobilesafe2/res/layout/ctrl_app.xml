@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_ctrlapp_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+        android:gravity="center_horizontal"
+        android:onClick="tvShiftOnClick"
+        android:padding="6dp"
+        android:text="@string/ctrl_app_shift_title2"
+        android:textColor="#666666"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_crtlblacknumber_title"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/devide_line" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:background="@color/backgroundcolor" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundcolor" >
+
+            <LinearLayout
+                android:id="@+id/ll_ctrlapp_load"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundcolor"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible" >
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="正在加载..."
+                    android:textColor="@color/grey"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_ctrlapp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bt_ctrlapp_sort"
+                android:cacheColorHint="@android:color/transparent" >
+            </ListView>
+
+            <Button
+                android:id="@+id/bt_ctrlapp_sort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:onClick="btSortOnClick"
+                android:text="按照程序apk大小排序"
+                android:textColor="#ff000000"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

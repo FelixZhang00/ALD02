@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+        android:gravity="center_horizontal"
+        android:text="缓存清理"
+        android:textColor="#666666"
+        android:textSize="28sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/devide_line" />
+
+    <ProgressBar
+        android:id="@+id/pb_cleancache2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_cleancache2_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="正在扫描..."
+        android:textColor="@color/mytextcolor_black"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundcolor" >
+
+        <ListView
+            android:id="@+id/lv_clearcache2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bt_clearcache2_sort"
+            android:cacheColorHint="@android:color/transparent" >
+        </ListView>
+
+        <Button
+            android:id="@+id/bt_clearcache2_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:clickable="false"
+            android:onClick="btnCacheSortOnClick"
+            android:text="按照缓存大小排序"
+            android:textColor="#ff000000"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>

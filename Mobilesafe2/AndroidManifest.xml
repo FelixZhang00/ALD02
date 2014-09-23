@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.project.jamffy.mobilesafe2"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- to be activated service on boot is completed -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+
+    <application
+        android:name="com.project.jamffy.mobilesafe2.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon5"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SplashActivity"
+            android:icon="@drawable/icon5"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/main_screen" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.LostProtectdActivity"
+            android:label="@string/lost_protected" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SetupGuide1Activity"
+            android:label="@string/setup_guide" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SetupGuide2Activity"
+            android:label="@string/setup_guide2" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SetupGuide3Activity"
+            android:label="@string/setup_guide3" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SetupGuide4Activity"
+            android:label="@string/setup_guide4" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SelectContactActivity"
+            android:label="@string/select_contact" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.LostProtectedSetActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SettingCenterActivity"
+            android:label="@string/settingcenter"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.AToolsActivity"
+            android:label="@string/atools"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.QueryNumberActivity"
+            android:label="@string/query_number" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.DragViewActivity"
+            android:label="@string/drag_view"
+            android:theme="@style/Transparent" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.SignalGuardActivity"
+            android:label="@string/singal_guard"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.CtrlAppActivity"
+            android:label="@string/ctrl_app"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.TryActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.AppLockActivity"
+            android:label="@string/app_lock"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.LockDoorActivity"
+            android:label="@string/lock_door"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.CtrlTaskActivity"
+            android:label="@string/ctrl_task"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.PssDetailsActivity"
+            android:theme="@style/activity_float_no_title" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.TaskSettingActivity"
+            android:label="@string/ctrl_task_setting"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.CommonNumberActivity"
+            android:label="@string/com_num_search"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.TrafficInfoActivity"
+            android:label="@string/traffic_info"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.ClearActivity"
+            android:label="@string/clear_activity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.CleanCacheActivity"
+            android:label="@string/clean_cache"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.CleanCacheActivity2"
+            android:label="@string/clean_cache"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.project.jamffy.mobilesafe2.ui.AntiVirusActivity"
+            android:label="@string/antivirus"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+
+        <receiver android:name="com.project.jamffy.mobilesafe2.receiver.CallPhoneReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
+        <!-- to receive data when boot completed -->
+
+        <receiver
+            android:name="com.project.jamffy.mobilesafe2.receiver.BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.project.jamffy.mobilesafe2.receiver.SMSReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.MyAdmin" >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/my_admin" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.project.jamffy.mobilesafe2.receiver.LockScreenReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.SCREEN_OFF" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.project.jamffy.mobilesafe2.receiver.ProcessWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/process_widget_provider" />
+        </receiver>
+
+        <service android:name="com.project.jamffy.mobilesafe2.service.AddressService" >
+        </service>
+        <service android:name="com.project.jamffy.mobilesafe2.service.BackupSmsService" >
+        </service>
+        <service android:name="com.project.jamffy.mobilesafe2.service.LockAppService" >
+        </service>
+        <service android:name="com.project.jamffy.mobilesafe2.service.UpdateWidgetService" >
+        </service>
+
+        <provider
+            android:name="com.project.jamffy.mobilesafe2.provider.AppLocksProvider"
+            android:authorities="com.project.jamffy.mobilesafe2.provider.AppLocksProvider"
+            android:exported="true" >
+        </provider>
+    </application>
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:label="Test"
+        android:targetPackage="com.project.jamffy.mobilesafe2" >
+    </instrumentation>
+
+</manifest>

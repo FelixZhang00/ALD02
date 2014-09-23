@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20dp" >
+
+        <TextView
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="程序名"
+            android:textSize="16sp" 
+            android:layout_width="0dp"/>
+
+        <TextView
+            android:id="@+id/tv_task_details_appname"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="程序名"
+            android:textSize="16sp" 
+             android:layout_width="0dp"/>
+    </TableRow>
+
+   <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20dip" >
+
+        <TextView
+            android:layout_height="20dip"
+            android:layout_weight="1"
+            android:text="包名" 
+            android:textSize="16sp"
+			android:layout_width="0dip"/>
+
+        <TextView
+            android:id="@+id/tv_task_details_packname"
+            android:layout_width="0dip"
+            android:layout_height="20dip"
+            android:layout_weight="1"
+            android:text="包名" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20dip" >
+
+        <TextView
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="权限列表"
+            android:textSize="16sp"
+            android:width="0dp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="200dip" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:id="@+id/sv_task_details"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" >
+            </ScrollView>
+        </LinearLayout>
+    </TableRow>
+
+</TableLayout>

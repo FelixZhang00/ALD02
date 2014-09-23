@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/backgroundcolor"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+        android:gravity="center_horizontal"
+        android:text="系统优化"
+        android:textColor="#666666"
+        android:textSize="28sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/devide_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_optimize_clearcache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="缓存清理"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    >
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/listview_devider" />
+
+    <LinearLayout
+        android:id="@+id/ll_optimize_clearsd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg_selector"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="8dp"
+            android:text="sd卡清理"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+        android:gravity="center_horizontal"
+        android:text="流量统计"
+        android:textColor="#666666"
+        android:textSize="28sp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/devide_line" />
+
+    <SlidingDrawer
+        android:id="@+id/sliding_drawer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:content="@+id/content"
+        android:handle="@+id/handle" >
+
+        <FrameLayout
+            android:id="@id/handle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_bottom_slidingdrawer_bg" >
+
+            <ImageView
+                android:id="@+id/main_jiantou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:layout_marginLeft="1.0dip"
+                android:layout_marginTop="2.0dip"
+                android:background="@drawable/main_jiantou_up" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_slider_bg" >
+
+            <LinearLayout
+                android:id="@+id/ll_ti_loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible" >
+
+                <ProgressBar
+                    style="@style/my_pb_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="正在加载流量信息..."
+                    android:textColor="@color/backgroundcolor" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <include
+                    android:id="@+id/traffic_title"
+                    layout="@layout/traffic_info_title2" />
+
+                <ListView
+                    android:id="@+id/lv_traffic_manager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/traffic_title"
+                    android:cacheColorHint="@color/main_slider_bg"
+                    android:listSelector="@drawable/list_item_selector" >
+                </ListView>
+            </RelativeLayout>
+        </FrameLayout>
+    </SlidingDrawer>
+
+</LinearLayout>

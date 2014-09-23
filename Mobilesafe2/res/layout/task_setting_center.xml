@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+        android:gravity="center_horizontal"
+        android:text="进程管理设置"
+        android:textColor="#666666"
+        android:textSize="28sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/devide_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip" >
+
+        <TextView
+            android:id="@+id/tv_task_setting_showsy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="4dp"
+            android:text="显示系统进程"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_task_setting_showsy_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_task_setting_showsy_text"
+            android:paddingLeft="4dp"
+            android:text="系统进程已显示"
+            android:textColor="#ff8b8683"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/cb_task_setting_showsy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:checked="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/listview_devider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip" >
+
+        <TextView
+            android:id="@+id/tv_ts_sfclean_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="4dp"
+            android:text="锁屏清理进程"
+            android:textColor="#ff000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_ts_sfclean_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_ts_sfclean_text"
+            android:paddingLeft="4dp"
+            android:text="未开启"
+            android:textColor="@color/mytextcolor_red"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/cb_ts_sfclean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:checked="false" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/listview_devider" />
+
+</LinearLayout>
