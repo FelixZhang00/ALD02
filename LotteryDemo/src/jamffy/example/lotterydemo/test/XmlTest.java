@@ -7,6 +7,7 @@ import java.io.Writer;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.net.protocal.Element;
 import jamffy.example.lotterydemo.net.protocal.Message;
+import jamffy.example.lotterydemo.net.protocal.element.CurrentIssueElement;
 
 import org.xmlpull.v1.XmlSerializer;
 
@@ -30,7 +31,7 @@ public class XmlTest extends AndroidTestCase {
 	 */
 	public void createXml3() {
 		Message message=new Message();
-		Element element=new Element();
+		Element element=new CurrentIssueElement();
 		String xml= message.getXml(element);
 		Log.i(TAG, xml);
 	}
