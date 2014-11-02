@@ -5,6 +5,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import jamffy.example.lotterydemo.ConstantValues;
+import jamffy.example.lotterydemo.bean.User;
+import jamffy.example.lotterydemo.engine.UserEnginImpl;
 import jamffy.example.lotterydemo.net.protocal.Element;
 import jamffy.example.lotterydemo.net.protocal.Message;
 import jamffy.example.lotterydemo.net.protocal.element.CurrentIssueElement;
@@ -22,17 +24,15 @@ import android.util.Xml;
  */
 public class XmlTest extends AndroidTestCase {
 
-	
-
 	private static final String TAG = "XmlTest";
 
 	/**
 	 * 用面向对象的思路，封装xml信息。 把更多的代码放在工具类里，大大简化了客户端的代码量
 	 */
 	public void createXml3() {
-		Message message=new Message();
-		Element element=new CurrentIssueElement();
-		String xml= message.getXml(element);
+		Message message = new Message();
+		Element element = new CurrentIssueElement();
+		String xml = message.getXml(element);
 		Log.i(TAG, xml);
 	}
 
@@ -48,10 +48,10 @@ public class XmlTest extends AndroidTestCase {
 			serializer.setOutput(writer);
 			// This method can only be called just after setOutput.
 			serializer.startDocument(ConstantValues.ENCODING, null);
-			
-			Message message=new Message();
+
+			Message message = new Message();
 			message.serializerMessage(serializer);
-			
+
 			serializer.endDocument();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -96,6 +96,19 @@ public class XmlTest extends AndroidTestCase {
 			serializer.endDocument();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void testLogin() {
+		UserEnginImpl userEnginImpl = new UserEnginImpl();
+		User user = new User();
+		user.setUesrname("15078676770");
+		user.setPassword("000000");
+		Message message = userEnginImpl.login(user);
+		if (message!=null) {
+			System.out.println(message.getBody().getOelement().getErrorcode());
+		}else{
+			System.out.println("message is null");
 		}
 	}
 

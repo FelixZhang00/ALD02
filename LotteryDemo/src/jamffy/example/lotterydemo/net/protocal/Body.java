@@ -10,6 +10,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.xmlpull.v1.XmlSerializer;
 
+
+
 import android.util.Xml;
 
 /**
@@ -36,6 +38,8 @@ public class Body {
 	public List<Element> getElements() {
 		return elements;
 	}
+	
+	
 
 	/**
 	 * 序列化请求
@@ -93,4 +97,22 @@ public class Body {
 
 		return des.authcode(orgDesInfo, "DECODE", ConstantValues.DES_PASSWORD);
 	}
+	
+
+	/*********************处理服务器回复*************************/
+	private String serviceBodyInsideDESInfo;//服务器端回复的body中的DES加密的信息
+	private Oelement oelement=new Oelement();
+	
+	public Oelement getOelement() {
+		return oelement;
+	}
+	public String getServiceBodyInsideDESInfo() {
+		return serviceBodyInsideDESInfo;
+	}
+	public void setServiceBodyInsideDESInfo(String serviceBodyInsideDESInfo) {
+		this.serviceBodyInsideDESInfo = serviceBodyInsideDESInfo;
+	}
+	/*********************处理服务器回复*************************/
+	
+	
 }

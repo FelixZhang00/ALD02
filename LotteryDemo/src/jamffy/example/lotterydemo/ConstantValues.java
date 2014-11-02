@@ -23,15 +23,19 @@ public interface ConstantValues {
 	 * 加密形式
 	 */
 	String COMPRESS = "DES";
-	
+
 	/**
 	 * 代理商密码(.so) JNI
 	 */
 	public static String AGENT_PASSWORD = "9ab62a694d8bf6ced1fab6acd48d02f8";
-	
+
 	/**
 	 * des加密用密钥
 	 */
 	String DES_PASSWORD = "9b2648fcdfbad80f";
+	/**
+	 * 服务器地址
+	 */
+	String LOTTERY_URI = "http://10.71.111.8:8080/MyZCWService/Entrance";
 
 }

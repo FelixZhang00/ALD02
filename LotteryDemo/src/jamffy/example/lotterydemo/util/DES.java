@@ -1,6 +1,8 @@
 package jamffy.example.lotterydemo.util;
 
 
+import jamffy.example.lotterydemo.ConstantValues;
+
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -162,6 +164,6 @@ public class DES {
 	public static void main(String[] args) {
 		DES des = new DES();
 		System.out.println(des.authcode("wewweewewew=","DECODE","0102030405060708"));//加密
-		System.out.println(des.authcode("d8fPhfd9JkW99p8aqhtVIA==","ENCODE","0102030405060708"));//解密
+		System.out.println(des.authcode("d8fPhfd9JkW99p8aqhtVIA==","ENCODE",ConstantValues.DES_PASSWORD));//解密
 	}
 }
