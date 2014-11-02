@@ -1,10 +1,11 @@
-package jamffy.example.lotterydemo.engine;
+package jamffy.example.lotterydemo.engine.lmp;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.xmlpull.v1.XmlPullParser;
@@ -13,21 +14,81 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.util.DebugUtils;
 import android.util.Xml;
 import jamffy.example.lotterydemo.ConstantValues;
+import jamffy.example.lotterydemo.GlobalParams;
 import jamffy.example.lotterydemo.bean.User;
+import jamffy.example.lotterydemo.engine.BaseEngine;
+import jamffy.example.lotterydemo.engine.UserEngine;
 import jamffy.example.lotterydemo.net.HttpClientUtil;
 import jamffy.example.lotterydemo.net.protocal.Message;
 import jamffy.example.lotterydemo.net.protocal.element.UserLoginElement;
 import jamffy.example.lotterydemo.util.DES;
 
-public class UserEnginImpl {
+public class UserEnginImpl extends BaseEngine implements UserEngine {
+
+	@Override
+	public Message login(User user) {
+		// 第一步：获取登录用的xml
+		// 创建登录用的element
+		UserLoginElement element = new UserLoginElement();
+		// 设置用户数据
+		element.getActpassword().setTagValue(user.getPassword());
+		// Message.getXml(element);
+		Message message = new Message();
+		message.getHeader().getUsername().setTagValue(user.getUesrname());
+		String xml = message.getXml(element);
+		Message resultMessage = getResult(xml);
+
+		// 第四步：请求结果的数据处理
+		// body部分的第二次解析，解析的是明文内容
+		XmlPullParser pullParser = Xml.newPullParser();
+		String body = GlobalParams.XML_BODY;
+		if (StringUtils.isNotBlank(body)) {
+			try {
+				pullParser.setInput(new StringReader(body));
+				int eventType = pullParser.getEventType();
+				String name = null;
+				while (eventType != XmlPullParser.END_DOCUMENT) {
+					switch (eventType) {
+					case XmlPullParser.START_TAG:
+						name = pullParser.getName();
+						if ("errorcode".equals(name)) {
+							resultMessage.getBody().getOelement()
+									.setErrorcode(pullParser.nextText());
+						}
+						if ("errormsg".equals(name)) {
+							resultMessage.getBody().getOelement()
+									.setErrormsg(pullParser.nextText());
+						}
+						break;
+
+					default:
+						break;
+					}
+					eventType = pullParser.next();
+
+				}
+				return resultMessage;
+			} catch (XmlPullParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return null;
+
+	}
 
 	/**
-	 * 用户登录
+	 * 用户登录(没有用到面向对象的思想，没用父类抽取出来的方法)
 	 * 
 	 * @param user
-	 * @return 
+	 * @return
 	 */
-	public Message login(User user) {
+	@Deprecated
+	public Message login1(User user) {
 		// 第一步：获取登录用的xml
 		// 创建登录用的element
 		UserLoginElement element = new UserLoginElement();

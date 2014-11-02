@@ -36,6 +36,6 @@ public interface ConstantValues {
 	/**
 	 * 服务器地址
 	 */
-	String LOTTERY_URI = "http://10.71.111.8:8080/MyZCWService/Entrance";
+	String LOTTERY_URI = "http://10.61.91.126:8080/MyZCWService/Entrance";
 
 }

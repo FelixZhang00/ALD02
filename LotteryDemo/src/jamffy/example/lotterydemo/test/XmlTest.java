@@ -6,10 +6,12 @@ import java.io.Writer;
 
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.bean.User;
-import jamffy.example.lotterydemo.engine.UserEnginImpl;
+import jamffy.example.lotterydemo.engine.UserEngine;
+import jamffy.example.lotterydemo.engine.lmp.UserEnginImpl;
 import jamffy.example.lotterydemo.net.protocal.Element;
 import jamffy.example.lotterydemo.net.protocal.Message;
 import jamffy.example.lotterydemo.net.protocal.element.CurrentIssueElement;
+import jamffy.example.lotterydemo.util.BeanFactory;
 
 import org.xmlpull.v1.XmlSerializer;
 
@@ -99,15 +101,33 @@ public class XmlTest extends AndroidTestCase {
 		}
 	}
 
-	public void testLogin() {
+	@Deprecated
+	public void testLogin1() {
 		UserEnginImpl userEnginImpl = new UserEnginImpl();
 		User user = new User();
 		user.setUesrname("15078676770");
 		user.setPassword("000000");
-		Message message = userEnginImpl.login(user);
-		if (message!=null) {
+		Message message = userEnginImpl.login1(user);
+		if (message != null) {
 			System.out.println(message.getBody().getOelement().getErrorcode());
-		}else{
+		} else {
+			System.out.println("message is null");
+		}
+	}
+
+	/**
+	 * 运用工厂设计模式
+	 */
+	public void testLogin() {
+		UserEngine userEngine = BeanFactory.getImp(UserEngine.class);
+		User user = new User();
+		user.setUesrname("15078676770");
+		user.setPassword("000000");
+		Message message= userEngine.login(user);
+		if (message != null) {
+			System.out.println(message.getBody().getOelement().getErrorcode());
+			System.out.println(message.getBody().getOelement().getErrormsg());
+		} else {
 			System.out.println("message is null");
 		}
 	}

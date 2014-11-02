@@ -16,5 +16,11 @@ public class GlobalParams {
 	 * 代理的端口
 	 */
 	public static int PROXY_PORT = 0;
+	
+	/**
+	 * xml数据中的body部分
+	 */
+	public static String XML_BODY="";
+	
 
 }
