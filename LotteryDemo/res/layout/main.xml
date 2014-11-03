@@ -25,7 +25,6 @@
         android:layout_height="match_parent"
         android:layout_above="@id/footer"
         android:layout_below="@id/title"
-        android:background="@color/blue"
          >
     </RelativeLayout>
 

@@ -1,6 +1,5 @@
 package view.manager;
 
-import view.SecondUI;
 import jamffy.example.lotterydemo.R;
 import android.app.Activity;
 import android.view.View;
@@ -15,15 +14,15 @@ import android.widget.TextView;
  * @author tmac
  *
  */
-public class TitleManger {
+public class FooterManger {
 	// 单例设计模式
-	private static TitleManger titleManger = new TitleManger();
+	private static FooterManger titleManger = new FooterManger();
 
-	private TitleManger() {
+	private FooterManger() {
 		super();
 	}
 
-	public static TitleManger getInstance() {
+	public static FooterManger getInstance() {
 		return titleManger;
 	}
 
@@ -71,16 +70,6 @@ public class TitleManger {
 			public void onClick(View v) {
 				System.out.println("help");
 
-			}
-		});
-		login.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				System.out.println("login");
-
-				MiddleManager mm = MiddleManager.getInstance();
-				mm.changeUI(new SecondUI(mm.getContext()));// changeUI需要修改，不能传递对象，但是明确目标
 			}
 		});
 	}
