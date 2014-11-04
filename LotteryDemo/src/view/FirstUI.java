@@ -1,5 +1,6 @@
 package view;
 
+import jamffy.example.lotterydemo.ConstantValues;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -24,6 +25,11 @@ public class FirstUI extends BaseUI {
 		textView.setText("第一个界面");
 		return textView;
 
+	}
+
+	@Override
+	public int getID() {
+		return ConstantValues.VIEW_FIRST;
 	}
 
 }

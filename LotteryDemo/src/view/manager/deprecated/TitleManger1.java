@@ -1,12 +1,7 @@
-package view.manager;
-
-import java.util.Observable;
-import java.util.Observer;
-
-import org.apache.commons.lang3.StringUtils;
+package view.manager.deprecated;
 
 import view.SecondUI;
-import jamffy.example.lotterydemo.ConstantValues;
+import view.manager.TitleManger;
 import jamffy.example.lotterydemo.R;
 import android.app.Activity;
 import android.view.View;
@@ -19,17 +14,18 @@ import android.widget.TextView;
  * 管理界面的标题栏 找上面的控件，提供多种显示样式
  * 
  * @author tmac
- *
+ *@deprecated
+ *@see TitleManger
  */
-public class TitleManger implements Observer {
+public class TitleManger1 {
 	// 单例设计模式
-	private static TitleManger titleManger = new TitleManger();
+	private static TitleManger1 titleManger = new TitleManger1();
 
-	private TitleManger() {
+	private TitleManger1() {
 		super();
 	}
 
-	public static TitleManger getInstance() {
+	public static TitleManger1 getInstance() {
 		return titleManger;
 	}
 
@@ -87,10 +83,10 @@ public class TitleManger implements Observer {
 
 				// MiddleManager mm = MiddleManager.getInstance();
 				// mm.changeUI(new SecondUI(mm.getContext()));
-
+				
 				// changeUI需要修改，不能传递对象，但是明确目标
 				// 解决频繁点击造成的频繁构造对象问题
-				MiddleManager mm = MiddleManager.getInstance();
+				MiddleManager1 mm = MiddleManager1.getInstance();
 				mm.changeUI(SecondUI.class);
 			}
 		});
@@ -125,27 +121,6 @@ public class TitleManger implements Observer {
 		initTitle();
 		loginContainer.setVisibility(View.VISIBLE);
 
-	}
-
-	@Override
-	public void update(Observable observable, Object data) {
-		if (observable instanceof MiddleManager) {
-
-			if (data != null && StringUtils.isNumeric(data.toString())) {
-				int id = Integer.parseInt(data.toString());
-				switch (id) {
-				case ConstantValues.VIEW_FIRST:
-					showUnLoginTitle();
-					break;
-				case ConstantValues.VIEW_SECOND:
-					showCommonTitle();
-					break;
-				default:
-					break;
-				}
-			}
-
-		}
 	}
 
 }

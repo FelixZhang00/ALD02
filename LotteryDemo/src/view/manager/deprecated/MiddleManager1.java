@@ -1,31 +1,39 @@
-package view.manager;
+package view.manager.deprecated;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Observable;
 
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import jamffy.example.lotterydemo.util.FadeUtil;
 import view.SecondUI;
+import view.manager.BaseUI;
+import view.manager.FooterManger;
+import view.manager.MiddleManager;
+import view.manager.TitleManger;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
-public class MiddleManager  extends Observable{
+/**
+ * @author tmac
+ *@deprecated 
+ *@see MiddleManager
+ */
+public class MiddleManager1 {
 
 	private static final String TAG = "MiddleManager";
-	private static MiddleManager middleManager = new MiddleManager();
+	private static MiddleManager1 middleManager = new MiddleManager1();
 
-	private MiddleManager() {
+	private MiddleManager1() {
 		super();
 	}
 
-	public static MiddleManager getInstance() {
+	public static MiddleManager1 getInstance() {
 		return middleManager;
 	}
 
@@ -111,24 +119,22 @@ public class MiddleManager  extends Observable{
 	 */
 	private void changeTitleAndFooter() {
 		// 耦合度太高。
-		// switch (currUI.getID()) {
-		// case ConstantValues.VIEW_FIRST:
-		// TitleManger.getInstance().showUnLoginTitle();
-		// FooterManger.getInstance().showCommonBottom();
-		// break;
-		//
-		// case ConstantValues.VIEW_SECOND:
-		// TitleManger.getInstance().showCommonTitle();
-		// FooterManger.getInstance().showGameBottom();
-		// break;
-		//
-		// default:
-		// break;
-		// }
+		switch (currUI.getID()) {
+		case ConstantValues.VIEW_FIRST:
+			TitleManger.getInstance().showUnLoginTitle();
+			FooterManger.getInstance().showCommonBottom();
+			break;
+
+		case ConstantValues.VIEW_SECOND:
+			TitleManger.getInstance().showCommonTitle();
+			FooterManger.getInstance().showGameBottom();
+			break;
+
+		default:
+			break;
+		}
 
 		// MiddleManager负责通知即可
-		setChanged();
-		notifyObservers(currUI.getID());
 
 	}
 

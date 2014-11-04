@@ -1,11 +1,5 @@
-package view.manager;
+package view.manager.deprecated;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import org.apache.commons.lang3.StringUtils;
-
-import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import android.app.Activity;
 import android.util.Log;
@@ -21,20 +15,21 @@ import android.widget.TextView;
  * 管理界面的标题栏 找上面的控件，提供多种显示样式
  * 
  * @author tmac
- *
+ *@deprecated
+ *@see FooterManger
  */
-public class FooterManger implements Observer {
+public class FooterManger1 {
 	protected static final String TAG = "FooterManger";
 	// 单例设计模式
-	private static FooterManger footerManger;
+	private static FooterManger1 footerManger;
 
-	private FooterManger() {
+	private FooterManger1() {
 		super();
 	}
 
-	public static FooterManger getInstance() {
+	public static FooterManger1 getInstance() {
 		if (footerManger == null) {
-			footerManger = new FooterManger();
+			footerManger = new FooterManger1();
 		}
 		return footerManger;
 	}
@@ -146,28 +141,6 @@ public class FooterManger implements Observer {
 	public void changeGameBottomNotice(String notice) {
 		playBottomNotice.setText(notice);
 	}
-
 	/*********************************************************************************************/
-
-	@Override
-	public void update(Observable observable, Object data) {
-		if (observable instanceof MiddleManager) {
-
-			if (data != null && StringUtils.isNumeric(data.toString())) {
-				int id = Integer.parseInt(data.toString());
-				switch (id) {
-				case ConstantValues.VIEW_FIRST:
-					showCommonBottom();
-					break;
-				case ConstantValues.VIEW_SECOND:
-					showGameBottom();
-					break;
-				default:
-					break;
-				}
-			}
-
-		}
-	}
 
 }

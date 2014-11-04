@@ -38,4 +38,9 @@ public interface ConstantValues {
 	 */
 	String LOTTERY_URI = "http://10.61.91.126:8080/MyZCWService/Entrance";
 
+	
+	int VIEW_FIRST=1;
+	int VIEW_SECOND=2;
+	 
+	
 }

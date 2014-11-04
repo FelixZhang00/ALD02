@@ -4,18 +4,22 @@ import jamffy.example.lotterydemo.util.FadeUtil;
 import view.FirstUI;
 import view.SecondUI;
 import view.manager.BaseUI;
+import view.manager.FooterManger;
 import view.manager.MiddleManager;
+
 import view.manager.TitleManger;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 /**
  * 刚开始的测试界面
@@ -56,14 +60,25 @@ public class MainActivityTest extends Activity {
 	private void init() {
 		TitleManger titleManger = TitleManger.getInstance();
 		titleManger.init(this);
-		titleManger.showUnLoginTitle();
+		// titleManger.showUnLoginTitle();
+
+		FooterManger footerManger = FooterManger.getInstance();
+		footerManger.init(this);
+		// footerManger.showCommonBottom();
 
 		middle = (RelativeLayout) findViewById(R.id.middle);
 		MiddleManager.getInstance().setMiddle(middle);
-		loadFirstUI();
+
+		// 建立观察者与被观察者之间的联系
+		MiddleManager.getInstance().addObserver(TitleManger.getInstance());
+		MiddleManager.getInstance().addObserver(FooterManger.getInstance());
+
+		// loadFirstUI();
+		// 让第一个界面和其他界面都通过changeUI（）来加载，方便管理
+		MiddleManager.getInstance().changeUI(FirstUI.class);
 
 		// 过2s启动第二个界面
-		handler.sendEmptyMessageDelayed(0, 2000);
+		// handler.sendEmptyMessageDelayed(0, 2000);
 	}
 
 	private View child1;
@@ -108,6 +123,18 @@ public class MainActivityTest extends Activity {
 		// middle.removeAllViews();
 
 		loadSecendUI();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			boolean result = MiddleManager.getInstance().goBack();
+			if (!result) {
+				Toast.makeText(getApplicationContext(), "是否退出", 0).show();
+			}
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

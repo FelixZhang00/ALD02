@@ -21,5 +21,11 @@ public abstract class BaseUI {
 	 * @return
 	 */
 	public abstract View getChild();
+	
+	/**
+	 * 要求每一个子类提供表示自己的ID
+	 * @return
+	 */
+	public abstract int getID();
 
 }
