@@ -36,11 +36,38 @@ public interface ConstantValues {
 	/**
 	 * 服务器地址
 	 */
-	String LOTTERY_URI = "http://10.61.91.126:8080/MyZCWService/Entrance";
+	String LOTTERY_URI = "http://10.61.90.34:8080/MyZCWService/Entrance";
 
+	/******* 各种界面的ID *********/
+	int VIEW_FIRST = 1;
+	int VIEW_SECOND = 2;
+	/**
+	 * 购彩大厅
+	 */
+	int VIEW_HALL = 10;
+	/**
+	 * 双色球选号界面
+	 */
+	int VIEW_SSQ = 15;
+	/**
+	 * 购物车
+	 */
+	int VIEW_SHOPPING = 20;
+	/**
+	 * 追期和倍投的设置界面
+	 */
+	int VIEW_PREBET = 25;
+	/**
+	 * 用户登录
+	 */
+	int VIEW_LOGIN = 30;
+	/**
+	 * 双色球标示
+	 */
+	int SSQ = 118;
 	
-	int VIEW_FIRST=1;
-	int VIEW_SECOND=2;
-	 
-	
+	/**
+	 * 服务器验证正确
+	 */
+	String SUCCESS="0";
 }

@@ -140,6 +140,9 @@ public class TitleManger implements Observer {
 				case ConstantValues.VIEW_SECOND:
 					showCommonTitle();
 					break;
+				case ConstantValues.VIEW_HALL:
+					showLoginTitle();
+					break;
 				default:
 					break;
 				}

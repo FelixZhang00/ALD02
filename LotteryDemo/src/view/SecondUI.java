@@ -20,7 +20,8 @@ public class SecondUI extends BaseUI {
 	/**
 	 * 避免重复创建控件
 	 */
-	private void init() {
+	@Override
+	public void init() {
 		textView = new TextView(getContext());
 		LayoutParams params = textView.getLayoutParams();
 		params = new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -39,6 +40,12 @@ public class SecondUI extends BaseUI {
 	@Override
 	public int getID() {
 		return ConstantValues.VIEW_SECOND;
+	}
+
+	@Override
+	public void setListener() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

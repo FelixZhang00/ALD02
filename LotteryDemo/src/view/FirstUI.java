@@ -14,7 +14,7 @@ public class FirstUI extends BaseUI {
 		super(context);
 	}
 
-	@Override
+
 	public View getChild() {
 		TextView textView = new TextView(getContext());
 		LayoutParams params = textView.getLayoutParams();
@@ -30,6 +30,19 @@ public class FirstUI extends BaseUI {
 	@Override
 	public int getID() {
 		return ConstantValues.VIEW_FIRST;
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setListener() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

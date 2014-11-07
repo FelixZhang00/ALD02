@@ -1,12 +1,13 @@
 package jamffy.example.lotterydemo;
 
 import jamffy.example.lotterydemo.util.FadeUtil;
+import jamffy.example.lotterydemo.util.PromptManager;
 import view.FirstUI;
+import view.HallUI;
 import view.SecondUI;
 import view.manager.BaseUI;
 import view.manager.FooterManger;
 import view.manager.MiddleManager;
-
 import view.manager.TitleManger;
 import android.app.Activity;
 import android.os.Bundle;
@@ -75,7 +76,10 @@ public class MainActivityTest extends Activity {
 
 		// loadFirstUI();
 		// 让第一个界面和其他界面都通过changeUI（）来加载，方便管理
-		MiddleManager.getInstance().changeUI(FirstUI.class);
+		// MiddleManager.getInstance().changeUI(FirstUI.class);
+
+		// 加载购彩大厅界面
+		MiddleManager.getInstance().changeUI(HallUI.class);
 
 		// 过2s启动第二个界面
 		// handler.sendEmptyMessageDelayed(0, 2000);
@@ -130,7 +134,8 @@ public class MainActivityTest extends Activity {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			boolean result = MiddleManager.getInstance().goBack();
 			if (!result) {
-				Toast.makeText(getApplicationContext(), "是否退出", 0).show();
+				// Toast.makeText(getApplicationContext(), "是否退出", 0).show();
+				PromptManager.showExitSystem(this);
 			}
 			return false;
 		}
