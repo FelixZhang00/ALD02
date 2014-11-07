@@ -1,12 +1,10 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
 import jamffy.example.lotterydemo.ConstantValues;
-import jamffy.example.lotterydemo.GlobalParams;
 import jamffy.example.lotterydemo.R;
 import jamffy.example.lotterydemo.engine.BaseEngine;
 import jamffy.example.lotterydemo.engine.CommInfoEngine;
@@ -17,19 +15,10 @@ import jamffy.example.lotterydemo.net.protocal.element.CurrentIssueElement;
 import jamffy.example.lotterydemo.util.BeanFactory;
 import jamffy.example.lotterydemo.util.PromptManager;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,13 +28,12 @@ import android.widget.TextView;
 import view.manager.BaseUI;
 
 /**
- * 购彩大厅界面<br>
- * 以viewpage的形式显示
+ * 购彩大厅界面 以listvie的形式显示
  * 
  * @author tmac
  *
  */
-public class HallUI extends BaseUI {
+public class HallUI2 extends BaseUI {
 
 	// 第一步：加载layout（布局参数设置）
 	// 第二步：初始化layout中控件
@@ -57,18 +45,9 @@ public class HallUI extends BaseUI {
 	private ListView categoryListView;
 	private categoryAdapter adapter;
 
-	private ViewPager viewPager;
-	private PagerTabStrip strip;
-	private ImageView underLine; // 选项卡下面的下划线
-	private MyPagerAdapter pageAdapter;
-	private List<View> pagers;
-
-	private TextView fcTitle;// 福彩
-	private TextView tcTitle;// 体彩
-	private TextView gpcTitle;// 高频彩
-
-	public HallUI(Context context) {
+	public HallUI2(Context context) {
 		super(context);
+		init();
 	}
 
 	@Override
@@ -78,57 +57,12 @@ public class HallUI extends BaseUI {
 
 	public void init() {
 		showInMiddle = (LinearLayout) View.inflate(getContext(),
-				R.layout.il_hall, null);
-		// 从另外一个布局文件中加载
-		categoryListView = (ListView) View.inflate(getContext(),
-				R.layout.hall_lottery_list, null);
-
-		categoryListView.setFadingEdgeLength(0);// 删除黑边（上下）
+				R.layout.il_hall2, null);
+		categoryListView = (ListView) findViewById(R.id.ii_hall_lottery_list);
 		adapter = new categoryAdapter();
 
 		categoryListView.setAdapter(adapter);
-
-		viewPager = (ViewPager) findViewById(R.id.viewpages);
-		pagers = new ArrayList<View>();
-		initPages();
-		pageAdapter = new MyPagerAdapter();
-		viewPager.setAdapter(pageAdapter);
-
-		initScrip();
-	}
-
-	/**
-	 * 初始化选项卡的下划线，把它放到选项卡的中间位置
-	 */
-	private void initScrip() {
-		underLine = (ImageView) findViewById(R.id.ii_category_selector);
-
-		fcTitle = (TextView) findViewById(R.id.ii_category_fc);
-		tcTitle = (TextView) findViewById(R.id.ii_category_tc);
-		gpcTitle = (TextView) findViewById(R.id.ii_category_gpc);
-		fcTitle.setTextColor(Color.RED);
-		// imagview的width设置成match_parent后，underLine.getWidth();就是父控件的width了，
-		// 而不是图片的真实宽度
-		// underLine.getWidth();
-		Bitmap bitmap = BitmapFactory.decodeResource(getContext()
-				.getResources(), R.drawable.id_category_selector);
-
-		int offset = (GlobalParams.metrics.widthPixels / 3 - bitmap.getWidth()) / 2;
-		Matrix matrix = new Matrix();
-		matrix.postTranslate(offset, 0);
-		underLine.setImageMatrix(matrix);
-
-	}
-
-	private void initPages() {
-		pagers.add(categoryListView);
-		TextView item = new TextView(getContext());
-		item.setText("体彩");
-		pagers.add(item);
-
-		item = new TextView(getContext());
-		item.setText("高频彩");
-		pagers.add(item);
+		// getCurrentIssusInfo();
 
 	}
 
@@ -138,88 +72,9 @@ public class HallUI extends BaseUI {
 		super.onResume();
 	}
 
-	/**
-	 * 上一次选项卡的位置
-	 */
-	private int lastPosition = 0;
-
 	@Override
 	public void setListener() {
-		fcTitle.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				viewPager.setCurrentItem(0);
-
-			}
-		});
-
-		tcTitle.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				viewPager.setCurrentItem(1);
-
-			}
-		});
-
-		gpcTitle.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				viewPager.setCurrentItem(2);
-
-			}
-		});
-		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int position) {
-				// TODO 当page转变时，自定义的下划线图片也跟着过来
-
-				// fromXDelta toXDelta:相对于图片初始位置需要增加的量
-				int tempDis = GlobalParams.metrics.widthPixels / 3;
-				TranslateAnimation anim = new TranslateAnimation(lastPosition
-						* tempDis, position * tempDis, 0, 0);
-				anim.setDuration(300);
-				// 因为是动画，并不是真的把图片移走了。所以需要用下面的设置使图片停在终点位置。
-				// 并且图片的真实位置不会因为动画而改变
-				anim.setFillAfter(true);
-				underLine.startAnimation(anim);
-				lastPosition = position;
-
-				// 选中的page对应的选项卡为红色
-				fcTitle.setTextColor(Color.BLACK);
-				tcTitle.setTextColor(Color.BLACK);
-				gpcTitle.setTextColor(Color.BLACK);
-
-				switch (position) {
-				case 0:
-					fcTitle.setTextColor(Color.RED);
-					break;
-				case 1:
-					tcTitle.setTextColor(Color.RED);
-					break;
-				case 2:
-					gpcTitle.setTextColor(Color.RED);
-					break;
-				}
-
-			}
-
-			@Override
-			public void onPageScrolled(int position, float positionOffset,
-					int positionOffsetPixels) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		ssqBet.setOnClickListener(this);
 	}
 
 	@Override
@@ -306,8 +161,8 @@ public class HallUI extends BaseUI {
 
 		// tag The tag to search for, using "tag.equals(getTag())".
 		// 简化：只更新第一个条目
-		TextView textView = (TextView) categoryListView.findViewWithTag(0);
-		if (textView != null) {
+		TextView textView=(TextView) categoryListView.findViewWithTag(0);
+		if (textView!=null) {
 			textView.setText(text);
 		}
 
@@ -341,31 +196,27 @@ public class HallUI extends BaseUI {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				holder = new ViewHolder();
-				convertView = View.inflate(getContext(),
-						R.layout.il_hall_lottery_item, null);
-
-				holder.logo = (ImageView) convertView
-						.findViewById(R.id.ii_hall_lottery_logo);
-				holder.title = (TextView) convertView
-						.findViewById(R.id.ii_hall_lottery_title);
-				holder.summary = (TextView) convertView
-						.findViewById(R.id.ii_hall_lottery_summary);
+			ViewHolder holder=null;
+			if (convertView==null) {
+				holder=new ViewHolder();
+				convertView=View.inflate(getContext(), R.layout.il_hall_lottery_item, null);
+				
+				holder.logo = (ImageView) convertView.findViewById(R.id.ii_hall_lottery_logo);
+				holder.title = (TextView) convertView.findViewById(R.id.ii_hall_lottery_title);
+				holder.summary = (TextView) convertView.findViewById(R.id.ii_hall_lottery_summary);
 				// needUpdate.add(holder.summary);
-				holder.bet = (ImageView) convertView
-						.findViewById(R.id.ii_hall_lottery_bet);
-
+				holder.bet = (ImageView) convertView.findViewById(R.id.ii_hall_lottery_bet);
+				
+				
 				convertView.setTag(holder);
 			} else {
-				holder = (ViewHolder) convertView.getTag();
-
+				holder=(ViewHolder) convertView.getTag();
+				
 			}
 			holder.logo.setImageResource(logoResIds[position]);
 			holder.title.setText(titleResIds[position]);
 			holder.summary.setTag(position);
-
+			
 			return convertView;
 		}
 
@@ -402,35 +253,6 @@ public class HallUI extends BaseUI {
 			result.append(minute).append("分");
 		}
 		return result.toString();
-	}
-
-	private class MyPagerAdapter extends PagerAdapter {
-
-		@Override
-		public int getCount() {
-			return pagers.size();
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			container.removeView(pagers.get(position));
-			// super.destroyItem(container, position, object);
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			View view = pagers.get(position);
-			container.addView(view);
-			return view;
-			// return super.instantiateItem(container, position);
-		}
-
-		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-			// TODO Auto-generated method stub
-			return arg0 == arg1;
-		}
-
 	}
 
 }

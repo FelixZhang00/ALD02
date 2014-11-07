@@ -5,6 +5,7 @@ import jamffy.example.lotterydemo.net.protocal.Message;
 import jamffy.example.lotterydemo.util.PromptManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -16,10 +17,13 @@ public abstract class BaseUI implements View.OnClickListener {
 	private Context context;
 	// 实现在中间的容器
 	protected ViewGroup showInMiddle;
+	
 
 	public BaseUI(Context context) {
 		super();
 		this.context = context;
+		init();
+		setListener();
 	}
 
 	public Context getContext() {
@@ -96,6 +100,21 @@ public abstract class BaseUI implements View.OnClickListener {
 			}
 			return null;
 		}
+	}
+	
+	/**
+	 * 界面加载时调用
+	 */
+	public void onResume(){
+		
+	}
+	
+	/**
+	 * 界面pause后，让子类实现具体的清理资源操作
+	 * 
+	 */
+	public void onPause(){
+		
 	}
 
 }

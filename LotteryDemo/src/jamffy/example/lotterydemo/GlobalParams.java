@@ -1,5 +1,7 @@
 package jamffy.example.lotterydemo;
 
+import android.util.DisplayMetrics;
+
 /**
  * 保存一些全局参数，比如临时的设置等
  * 
@@ -22,5 +24,9 @@ public class GlobalParams {
 	 */
 	public static String XML_BODY="";
 	
+	/**
+	 * 屏幕尺寸
+	 */
+	public static DisplayMetrics metrics=null;
 
 }

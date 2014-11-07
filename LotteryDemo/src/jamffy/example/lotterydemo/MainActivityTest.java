@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,7 +56,18 @@ public class MainActivityTest extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		getMetrics();
 		init();
+	}
+
+	/**
+	 * 获取屏幕尺寸，并保存到全局常量中
+	 */
+	private void getMetrics() {
+		DisplayMetrics outMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+		GlobalParams.metrics = outMetrics;
 	}
 
 	private void init() {

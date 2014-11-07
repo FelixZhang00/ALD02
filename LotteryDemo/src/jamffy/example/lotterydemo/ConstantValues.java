@@ -1,5 +1,7 @@
 package jamffy.example.lotterydemo;
 
+import android.util.DisplayMetrics;
+
 /**
  * 专门存放常量的接口 为什么不用类？ 省去写public static final 的麻烦
  * 
@@ -36,7 +38,7 @@ public interface ConstantValues {
 	/**
 	 * 服务器地址
 	 */
-	String LOTTERY_URI = "http://10.61.90.34:8080/MyZCWService/Entrance";
+	String LOTTERY_URI = "http://10.71.105.41:8080/MyZCWService/Entrance";
 
 	/******* 各种界面的ID *********/
 	int VIEW_FIRST = 1;
@@ -70,4 +72,6 @@ public interface ConstantValues {
 	 * 服务器验证正确
 	 */
 	String SUCCESS="0";
+	
+	
 }

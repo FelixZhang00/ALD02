@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
-public class MiddleManager  extends Observable{
+public class MiddleManager extends Observable {
 
 	private static final String TAG = "MiddleManager";
 	private static MiddleManager middleManager = new MiddleManager();
@@ -93,11 +93,19 @@ public class MiddleManager  extends Observable{
 			}
 		}
 		Log.i(TAG, targetUI.toString());
+
+		// 界面pause前调用BaseUI的onPause（），具体的实现让子类来做
+		if (currUI != null) {
+			currUI.onPause();
+		}
+
 		middle.removeAllViews();
 		View child = targetUI.getChild();
 		middle.addView(child);
 		FadeUtil.fadeIn(child, 0, 1000);
-
+		
+		// 界面Resume后，让子类实现具体的Resume（）方法
+		targetUI.onResume();
 		currUI = targetUI;
 		// 把当前界面放到栈顶
 		historyView.addFirst(viewName);
