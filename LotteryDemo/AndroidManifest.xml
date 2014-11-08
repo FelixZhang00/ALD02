@@ -13,7 +13,8 @@
         android:targetPackage="jamffy.example.lotterydemo" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -25,8 +26,8 @@
         <activity
             android:name=".MainActivityTest"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"
-             >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

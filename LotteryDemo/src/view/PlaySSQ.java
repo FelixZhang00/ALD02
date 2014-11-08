@@ -7,6 +7,9 @@ import java.util.Random;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import view.custom.MyGridView;
 import view.custom.MyGridView.OnActionUpListener;
 import view.manager.BaseUI;
 import view.manager.TitleManger;
+import view.sensor.ShakeListener;
 
 public class PlaySSQ extends BaseUI {
 
@@ -38,6 +42,12 @@ public class PlaySSQ extends BaseUI {
 	private List<Integer> redList;
 	private List<Integer> blueList;
 
+	/**
+	 * 传感器管理工具
+	 */
+	private SensorManager manager;
+	private ShakeListener listener;
+
 	public PlaySSQ(Context context) {
 		super(context);
 	}
@@ -54,7 +64,7 @@ public class PlaySSQ extends BaseUI {
 
 		redList = new ArrayList<Integer>();
 		blueList = new ArrayList<Integer>();
-		
+
 		redAdapter = new PoolAdapter(getContext(), ConstantValues.RED_POOL_NUM,
 				redList, R.drawable.id_redball);
 		blueAdapter = new PoolAdapter(getContext(),
@@ -62,6 +72,8 @@ public class PlaySSQ extends BaseUI {
 		redContainer.setAdapter(redAdapter);
 		blueContainer.setAdapter(blueAdapter);
 
+		manager = (SensorManager) getContext().getSystemService(
+				Context.SENSOR_SERVICE);
 	}
 
 	@Override
@@ -110,33 +122,41 @@ public class PlaySSQ extends BaseUI {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ii_ssq_random_blue:
-			blueList.clear();
-			// 产生1~16 1个随机数
-			Random random = new Random();
-			while (blueList.size() < 1) {
-				int num = random.nextInt(16) + 1;
-				blueList.add(num);
-			}
-			// 让对应的球变色
-			blueAdapter.notifyDataSetChanged();
+			randomBlue();
 			break;
 		case R.id.ii_ssq_random_red:
-			redList.clear();
-			random = new Random();
-			while (redList.size() < 6) {
-				int num = random.nextInt(33) + 1;
-				if (redList.contains(num)) {
-					continue;
-				}
-				redList.add(num);
-			}
-			redAdapter.notifyDataSetChanged();
+			randomRed();
 			break;
 
 		default:
 			break;
 		}
 		super.onClick(v);
+	}
+
+	private void randomRed() {
+		redList.clear();
+		Random random = new Random();
+		while (redList.size() < 6) {
+			int num = random.nextInt(33) + 1;
+			if (redList.contains(num)) {
+				continue;
+			}
+			redList.add(num);
+		}
+		redAdapter.notifyDataSetChanged();
+	}
+
+	private void randomBlue() {
+		blueList.clear();
+		// 产生1~16 1个随机数
+		Random random = new Random();
+		while (blueList.size() < 1) {
+			int num = random.nextInt(16) + 1;
+			blueList.add(num);
+		}
+		// 让对应的球变色
+		blueAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -146,6 +166,21 @@ public class PlaySSQ extends BaseUI {
 
 	@Override
 	public void onResume() {
+
+		listener = new ShakeListener(getContext()) {
+
+			@Override
+			public void doAfterShake() {
+				randomBlue();
+				randomRed();
+			}
+		};
+
+		// 将传感器工具注册成 加速器
+		manager.registerListener(listener,
+				manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				SensorManager.SENSOR_DELAY_FASTEST);
+
 		changTitleContent();
 		super.onResume();
 	}
@@ -168,6 +203,7 @@ public class PlaySSQ extends BaseUI {
 	@Override
 	public void onPause() {
 		clear();
+		manager.unregisterListener(listener);
 		super.onPause();
 	}
 
