@@ -21,10 +21,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.style.BulletSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import view.manager.BaseUI;
+import view.manager.MiddleManager;
 
 /**
  * 购彩大厅界面<br>
@@ -67,6 +70,8 @@ public class HallUI extends BaseUI {
 	private TextView tcTitle;// 体彩
 	private TextView gpcTitle;// 高频彩
 
+	private Bundle ssqBundle;
+	
 	public HallUI(Context context) {
 		super(context);
 	}
@@ -311,6 +316,10 @@ public class HallUI extends BaseUI {
 			textView.setText(text);
 		}
 
+		// 向BaseUI设置bundle信息
+		 ssqBundle = new Bundle();
+		ssqBundle.putString("ssqissue", issue);
+		
 	}
 
 	// 资源信息
@@ -340,7 +349,8 @@ public class HallUI extends BaseUI {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				holder = new ViewHolder();
@@ -365,7 +375,15 @@ public class HallUI extends BaseUI {
 			holder.logo.setImageResource(logoResIds[position]);
 			holder.title.setText(titleResIds[position]);
 			holder.summary.setTag(position);
+			holder.bet.setOnClickListener(new OnClickListener() {
 
+				@Override
+				public void onClick(View v) {
+					if (position == 0) {
+						MiddleManager.getInstance().changeUI(PlaySSQ.class,ssqBundle);
+					}
+				}
+			});
 			return convertView;
 		}
 

@@ -126,6 +126,10 @@ public class TitleManger implements Observer {
 		loginContainer.setVisibility(View.VISIBLE);
 
 	}
+	
+	public void changTitleContent(String text){
+		titleContent.setText(text);
+	}
 
 	@Override
 	public void update(Observable observable, Object data) {
@@ -138,6 +142,7 @@ public class TitleManger implements Observer {
 					showUnLoginTitle();
 					break;
 				case ConstantValues.VIEW_SECOND:
+				case ConstantValues.VIEW_SSQ:	
 					showCommonTitle();
 					break;
 				case ConstantValues.VIEW_HALL:

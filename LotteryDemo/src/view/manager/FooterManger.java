@@ -160,6 +160,7 @@ public class FooterManger implements Observer {
 					showCommonBottom();
 					break;
 				case ConstantValues.VIEW_SECOND:
+				case ConstantValues.VIEW_SSQ:
 					showGameBottom();
 					break;
 				case ConstantValues.VIEW_HALL:

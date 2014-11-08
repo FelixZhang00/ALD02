@@ -9,8 +9,12 @@ import java.util.Observable;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import jamffy.example.lotterydemo.util.FadeUtil;
+import jamffy.example.lotterydemo.util.PromptManager;
+import view.HallUI;
+import view.PlaySSQ;
 import view.SecondUI;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -51,7 +55,7 @@ public class MiddleManager extends Observable {
 		middle.addView(child);
 		// child.startAnimation(AnimationUtils.loadAnimation(getContext(),
 		// R.anim.view_tran_change));
-		FadeUtil.fadeIn(child, 0, 1000);
+		FadeUtil.fadeIn(child, 0, 500);
 	}
 
 	/**
@@ -102,8 +106,61 @@ public class MiddleManager extends Observable {
 		middle.removeAllViews();
 		View child = targetUI.getChild();
 		middle.addView(child);
-		FadeUtil.fadeIn(child, 0, 1000);
-		
+		FadeUtil.fadeIn(child, 0, 500);
+
+		// 界面Resume后，让子类实现具体的Resume（）方法
+		targetUI.onResume();
+		currUI = targetUI;
+		// 把当前界面放到栈顶
+		historyView.addFirst(viewName);
+
+		changeTitleAndFooter();
+	}
+
+	/**
+	 * @param targetClazz
+	 * @param bundle
+	 *            传递的数据
+	 */
+	public void changeUI(Class<? extends BaseUI> targetClazz, Bundle bundle) {
+		// 判断需要创建的UI与当前的UI是否一致
+		if (currUI != null && currUI.getClass() == targetClazz) {
+			return;
+		}
+		String viewName = targetClazz.getSimpleName();
+		BaseUI targetUI = null;
+		// 判断：是否创建了——曾经创建过的界面需要存储
+		// 创建了，重用
+		if (viewMap.containsKey(viewName)) {
+			targetUI = viewMap.get(viewName);
+		} else {
+			try {
+				// 否则，创建
+				// 通过某种构造器（主要指参数区别）来创建实例
+				Constructor<? extends BaseUI> constructor = targetClazz
+						.getConstructor(Context.class);
+				targetUI = constructor.newInstance(getContext());
+
+				// 登记
+				viewMap.put(viewName, targetUI);
+			} catch (Exception e) {
+				throw new RuntimeException("constructor newInstance error!");
+			}
+		}
+		if (targetUI != null) {
+			targetUI.setBundle(bundle);
+		}
+
+		// 界面pause前调用BaseUI的onPause（），具体的实现让子类来做
+		if (currUI != null) {
+			currUI.onPause();
+		}
+
+		middle.removeAllViews();
+		View child = targetUI.getChild();
+		middle.addView(child);
+		FadeUtil.fadeIn(child, 0, 500);
+
 		// 界面Resume后，让子类实现具体的Resume（）方法
 		targetUI.onResume();
 		currUI = targetUI;
@@ -156,15 +213,24 @@ public class MiddleManager extends Observable {
 			return false;
 		}
 		historyView.removeFirst();
-		middle.removeAllViews();
-
 		String key = historyView.getFirst();
 		BaseUI targetUI = viewMap.get(key);
-		View child = targetUI.getChild();
-		middle.addView(child);
-		FadeUtil.fadeIn(child, 0, 1000);
-		currUI = targetUI;
-		changeTitleAndFooter();
+
+		if (targetUI != null) {
+			currUI.onPause();
+			middle.removeAllViews();
+			View child = targetUI.getChild();
+			middle.addView(child);
+			targetUI.onResume();
+			currUI = targetUI;
+			FadeUtil.fadeIn(child, 0, 500);
+			changeTitleAndFooter();
+			
+		} else {
+			this.changeUI(HallUI.class);
+			PromptManager.showToast(getContext(), "应用在低内存下运行");
+		}
+
 		return true;
 	}
 

@@ -38,7 +38,7 @@ public interface ConstantValues {
 	/**
 	 * 服务器地址
 	 */
-	String LOTTERY_URI = "http://10.71.105.41:8080/MyZCWService/Entrance";
+	String LOTTERY_URI = "http://10.71.107.90:8080/MyZCWService/Entrance";
 
 	/******* 各种界面的ID *********/
 	int VIEW_FIRST = 1;
@@ -73,5 +73,11 @@ public interface ConstantValues {
 	 */
 	String SUCCESS="0";
 	
+	
+	/**
+	 * 选号球的个数
+	 */
+	int RED_POOL_NUM=33;
+	int BLUE_POOL_NUM=16;
 	
 }
