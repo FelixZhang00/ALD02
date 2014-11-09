@@ -51,7 +51,7 @@ public class Message {
 	}
 
 	/**
-	 * 获取xml数据
+	 * 转化成xml数据
 	 * 
 	 * @param element
 	 *            请求对象,如果要扩展添加多个element的话， 

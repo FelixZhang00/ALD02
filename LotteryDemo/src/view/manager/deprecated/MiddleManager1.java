@@ -8,7 +8,6 @@ import java.util.Map;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import jamffy.example.lotterydemo.util.FadeUtil;
-import view.SecondUI;
 import view.manager.BaseUI;
 import view.manager.FooterManger;
 import view.manager.MiddleManager;

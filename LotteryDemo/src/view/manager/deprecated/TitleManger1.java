@@ -1,6 +1,5 @@
 package view.manager.deprecated;
 
-import view.SecondUI;
 import view.manager.TitleManger;
 import jamffy.example.lotterydemo.R;
 import android.app.Activity;

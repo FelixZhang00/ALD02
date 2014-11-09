@@ -5,8 +5,10 @@ import java.util.Observer;
 
 import org.apache.commons.lang3.StringUtils;
 
-import view.SecondUI;
+import view.LoginUI;
+import view.manager.deprecated.SecondUI;
 import jamffy.example.lotterydemo.ConstantValues;
+import jamffy.example.lotterydemo.GlobalParams;
 import jamffy.example.lotterydemo.R;
 import android.app.Activity;
 import android.view.View;
@@ -68,6 +70,7 @@ public class TitleManger implements Observer {
 			@Override
 			public void onClick(View v) {
 				System.out.println("返回键");
+				MiddleManager.getInstance().goBack();
 
 			}
 		});
@@ -91,7 +94,7 @@ public class TitleManger implements Observer {
 				// changeUI需要修改，不能传递对象，但是明确目标
 				// 解决频繁点击造成的频繁构造对象问题
 				MiddleManager mm = MiddleManager.getInstance();
-				mm.changeUI(SecondUI.class);
+				mm.changeUI(LoginUI.class);
 			}
 		});
 	}
@@ -126,8 +129,8 @@ public class TitleManger implements Observer {
 		loginContainer.setVisibility(View.VISIBLE);
 
 	}
-	
-	public void changTitleContent(String text){
+
+	public void changTitleContent(String text) {
 		titleContent.setText(text);
 	}
 
@@ -142,11 +145,21 @@ public class TitleManger implements Observer {
 					showUnLoginTitle();
 					break;
 				case ConstantValues.VIEW_SECOND:
-				case ConstantValues.VIEW_SSQ:	
+				case ConstantValues.VIEW_SSQ:
+				case ConstantValues.VIEW_SHOPPING:
+				case ConstantValues.VIEW_LOGIN:
 					showCommonTitle();
 					break;
 				case ConstantValues.VIEW_HALL:
-					showLoginTitle();
+					if (GlobalParams.isLogined) {
+						showLoginTitle();
+						String text = "用户：" + GlobalParams.USER_NAME + "\n"
+								+ "余额：" + GlobalParams.USER_BALANCE.toString()
+								+ "元";
+						userInfo.setText(text);
+					} else {
+						showUnLoginTitle();
+					}
 					break;
 				default:
 					break;

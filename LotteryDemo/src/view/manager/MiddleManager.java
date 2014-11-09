@@ -12,7 +12,7 @@ import jamffy.example.lotterydemo.util.FadeUtil;
 import jamffy.example.lotterydemo.util.PromptManager;
 import view.HallUI;
 import view.PlaySSQ;
-import view.SecondUI;
+import view.manager.deprecated.SecondUI;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +43,12 @@ public class MiddleManager extends Observable {
 		return middle.getContext();
 	}
 
+	private BaseUI currUI;
+
+	public BaseUI getCurrUI() {
+		return currUI;
+	}
+
 	/**
 	 * 有频繁创建对象的问题
 	 * 
@@ -55,15 +61,13 @@ public class MiddleManager extends Observable {
 		middle.addView(child);
 		// child.startAnimation(AnimationUtils.loadAnimation(getContext(),
 		// R.anim.view_tran_change));
-		FadeUtil.fadeIn(child, 0, 500);
+		FadeUtil.fadeIn(child, 0, 300);
 	}
 
 	/**
 	 * 如果中间容器对象创建过了，就在此登个记. 如果手机内存空间不够了，还需要其他的解决方法
 	 */
 	private Map<String, BaseUI> viewMap = new HashMap<String, BaseUI>();
-
-	private BaseUI currUI;
 
 	/**
 	 * 通过字节码标示，避免了重复创建对象
@@ -106,7 +110,7 @@ public class MiddleManager extends Observable {
 		middle.removeAllViews();
 		View child = targetUI.getChild();
 		middle.addView(child);
-		FadeUtil.fadeIn(child, 0, 500);
+		FadeUtil.fadeIn(child, 0, 300);
 
 		// 界面Resume后，让子类实现具体的Resume（）方法
 		targetUI.onResume();
@@ -159,7 +163,7 @@ public class MiddleManager extends Observable {
 		middle.removeAllViews();
 		View child = targetUI.getChild();
 		middle.addView(child);
-		FadeUtil.fadeIn(child, 0, 500);
+		FadeUtil.fadeIn(child, 0, 300);
 
 		// 界面Resume后，让子类实现具体的Resume（）方法
 		targetUI.onResume();
@@ -223,15 +227,19 @@ public class MiddleManager extends Observable {
 			middle.addView(child);
 			targetUI.onResume();
 			currUI = targetUI;
-			FadeUtil.fadeIn(child, 0, 500);
+			FadeUtil.fadeIn(child, 0, 300);
 			changeTitleAndFooter();
-			
+
 		} else {
 			this.changeUI(HallUI.class);
 			PromptManager.showToast(getContext(), "应用在低内存下运行");
 		}
 
 		return true;
+	}
+
+	public void clear() {
+		historyView.clear();
 	}
 
 }

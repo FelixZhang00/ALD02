@@ -19,4 +19,20 @@ public interface UserEngine {
 	 */
 	Message login(User user);
 
+	/**
+	 * 获取用户余额
+	 * 
+	 * @param user
+	 * @return
+	 */
+	Message getBalance(User user);
+
+	/**
+	 * 投注
+	 * 
+	 * @param user
+	 * @return
+	 */
+	Message bet(User user);
+
 }

@@ -1,4 +1,4 @@
-package view;
+package view.manager.deprecated;
 
 import org.apache.commons.lang3.StringUtils;
 

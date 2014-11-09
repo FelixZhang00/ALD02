@@ -2,13 +2,13 @@ package jamffy.example.lotterydemo;
 
 import jamffy.example.lotterydemo.util.FadeUtil;
 import jamffy.example.lotterydemo.util.PromptManager;
-import view.FirstUI;
 import view.HallUI;
-import view.SecondUI;
 import view.manager.BaseUI;
 import view.manager.FooterManger;
 import view.manager.MiddleManager;
 import view.manager.TitleManger;
+import view.manager.deprecated.FirstUI;
+import view.manager.deprecated.SecondUI;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;

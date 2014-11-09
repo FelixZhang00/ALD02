@@ -15,11 +15,16 @@ import android.util.DebugUtils;
 import android.util.Xml;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.GlobalParams;
+import jamffy.example.lotterydemo.bean.ShoppingCart;
+import jamffy.example.lotterydemo.bean.Ticket;
 import jamffy.example.lotterydemo.bean.User;
 import jamffy.example.lotterydemo.engine.BaseEngine;
 import jamffy.example.lotterydemo.engine.UserEngine;
 import jamffy.example.lotterydemo.net.HttpClientUtil;
 import jamffy.example.lotterydemo.net.protocal.Message;
+import jamffy.example.lotterydemo.net.protocal.element.BalanceElement;
+import jamffy.example.lotterydemo.net.protocal.element.BetElement;
+import jamffy.example.lotterydemo.net.protocal.element.CurrentIssueElement;
 import jamffy.example.lotterydemo.net.protocal.element.UserLoginElement;
 import jamffy.example.lotterydemo.util.DES;
 
@@ -36,8 +41,8 @@ public class UserEnginImpl extends BaseEngine implements UserEngine {
 		Message message = new Message();
 		message.getHeader().getUsername().setTagValue(user.getUesrname());
 		String xml = message.getXml(element);
+		// 得到服务器的结果
 		Message resultMessage = getResult(xml);
-
 		// 第四步：请求结果的数据处理
 		// body部分的第二次解析，解析的是明文内容
 		XmlPullParser pullParser = Xml.newPullParser();
@@ -79,6 +84,174 @@ public class UserEnginImpl extends BaseEngine implements UserEngine {
 
 		return null;
 
+	}
+
+	@Override
+	public Message getBalance(User user) {
+		// 第一步：获取登录用的xml
+		BalanceElement element = new BalanceElement();
+		Message message = new Message();
+		message.getHeader().getUsername().setTagValue(user.getUesrname());
+		String xml = message.getXml(element);
+		// 得到服务器的结果
+		// 经过父类校验后，将xml数据封装成message的形式
+		Message result = super.getResult(xml);
+
+		if (result != null) {
+			// 请求结果的数据处理
+			// body部分的第二次解析，解析的是明文内容
+			XmlPullParser parser = Xml.newPullParser();
+
+			String body = GlobalParams.XML_BODY;
+			try {
+				parser.setInput(new StringReader(body));
+				int eventType = parser.getEventType();
+				String tagName;
+				BalanceElement balanceElement = null;
+				while (eventType != XmlPullParser.END_DOCUMENT) {
+					switch (eventType) {
+					case XmlPullParser.START_TAG:
+						tagName = parser.getName();
+						// 处理公共数据
+						if ("errorcode".equals(tagName)) {
+							String text = parser.nextText();
+							result.getBody().getOelement().setErrorcode(text);
+						}
+						if ("errormsg".equals(tagName)) {
+							String text = parser.nextText();
+							result.getBody().getOelement().setErrormsg(text);
+						}
+
+						// 处理特殊数据
+						// 如果返回的数据中有element节点，
+						if ("element".equals(tagName)) {
+							balanceElement = new BalanceElement();
+							result.getBody().getElements().add(balanceElement);
+						}
+						if ("investvalues".equals(tagName)) {
+							String text = parser.nextText();
+							if (balanceElement != null) {
+								balanceElement.setInvestvalues(text);
+							}
+							System.out.println("余额：" + text);
+
+						}
+
+						break;
+
+					default:
+						break;
+					}
+					eventType = parser.next();
+				}
+			} catch (XmlPullParserException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+		return null;
+	}
+
+	@Override
+	public Message bet(User user) {
+		// 第一步：获取登录用的xml
+		BetElement element = new BetElement();
+		element.getLotteryid().setTagValue(
+				ShoppingCart.getInstance().getLotteryid().toString());
+
+		// 彩票的业务里面：
+		// ①关于注数的计算
+		// ②关于投注信息封装（用户投注号码）
+
+		// 010203040506|01^01020304050607|01
+
+		StringBuffer codeBuffer = new StringBuffer();
+		for (Ticket item : ShoppingCart.getInstance().getTickets()) {
+			codeBuffer.append("^").append(item.getRedNum().replaceAll(" ", ""))
+					.append("|").append(item.getBlueNum().replaceAll(" ", ""));
+		}
+
+		element.getLotterycode().setTagValue(codeBuffer.substring(1));
+
+		element.getIssue().setTagValue(ShoppingCart.getInstance().getIssue());
+		element.getLotteryvalue().setTagValue(
+				(ShoppingCart.getInstance().getLotteryvalue() * 100) + "");
+
+		element.getLotterynumber().setTagValue(
+				ShoppingCart.getInstance().getLotterynumber().toString());
+		element.getAppnumbers().setTagValue(
+				ShoppingCart.getInstance().getAppnumbers().toString());
+		element.getIssuesnumbers().setTagValue(
+				ShoppingCart.getInstance().getIssuesnumbers().toString());
+
+		element.getIssueflag().setTagValue(
+				ShoppingCart.getInstance().getIssuesnumbers() > 1 ? "1" : "0");
+
+		Message message = new Message();
+		message.getHeader().getUsername().setTagValue(user.getUesrname());
+
+		String xml = message.getXml(element);
+		// 得到服务器的结果
+		// 经过父类校验后，将xml数据封装成message的形式
+		Message result = super.getResult(xml);
+
+		if (result != null) {
+			// 请求结果的数据处理
+			// body部分的第二次解析，解析的是明文内容
+			XmlPullParser parser = Xml.newPullParser();
+
+			String body = GlobalParams.XML_BODY;
+			try {
+				parser.setInput(new StringReader(body));
+				int eventType = parser.getEventType();
+				String tagName;
+				BetElement betElement = null;
+				while (eventType != XmlPullParser.END_DOCUMENT) {
+					switch (eventType) {
+					case XmlPullParser.START_TAG:
+						tagName = parser.getName();
+						// 处理公共数据
+						if ("errorcode".equals(tagName)) {
+							String text = parser.nextText();
+							result.getBody().getOelement().setErrorcode(text);
+						}
+						if ("errormsg".equals(tagName)) {
+							String text = parser.nextText();
+							result.getBody().getOelement().setErrormsg(text);
+						}
+
+						// 处理特殊数据
+						// 如果返回的数据中有element节点，
+						if ("element".equals(tagName)) {
+							betElement = new BetElement();
+							result.getBody().getElements().add(betElement);
+						}
+						if ("actvalue".equals(tagName)) {
+							String text = parser.nextText();
+							if (betElement != null) {
+								betElement.setActvalue(text);
+							}
+							System.out.println("余额：" + text);
+
+						}
+
+						break;
+
+					default:
+						break;
+					}
+					eventType = parser.next();
+				}
+			} catch (XmlPullParserException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+		return null;
 	}
 
 	/**
@@ -210,4 +383,5 @@ public class UserEnginImpl extends BaseEngine implements UserEngine {
 		}
 		return null;
 	}
+
 }

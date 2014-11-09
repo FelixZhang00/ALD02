@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import org.apache.commons.lang3.StringUtils;
 
+import view.PlaySSQ;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import android.app.Activity;
@@ -89,6 +90,20 @@ public class FooterManger implements Observer {
 
 			public void onClick(View v) {
 				Log.i(TAG, "点击清空按钮");
+				BaseUI currUI = MiddleManager.getInstance().getCurrUI();
+
+				// if (currUI instanceof PlaySSQ) {
+				// ((PlaySSQ) currUI).clear();
+				// }
+				// if (currUI instanceof PlayQC) {
+				// ((PlayQC) currUI).clear();
+				// }
+				// 上面做法的缺点：如果彩种多的话，需要多次判断
+
+				// 改进：属于PlayGame接口的类都有clear（）功能
+				if (currUI instanceof PlayGame) {
+					((PlayGame) currUI).clear();
+				}
 
 			}
 		});
@@ -97,7 +112,10 @@ public class FooterManger implements Observer {
 
 			public void onClick(View v) {
 				Log.i(TAG, "点击选好按钮");
-
+				BaseUI currUI = MiddleManager.getInstance().getCurrUI();
+				if (currUI instanceof PlayGame) {
+					((PlayGame) currUI).done();
+				}
 			}
 		});
 	}
@@ -157,6 +175,7 @@ public class FooterManger implements Observer {
 				int id = Integer.parseInt(data.toString());
 				switch (id) {
 				case ConstantValues.VIEW_FIRST:
+				case ConstantValues.VIEW_LOGIN:
 					showCommonBottom();
 					break;
 				case ConstantValues.VIEW_SECOND:
@@ -166,6 +185,8 @@ public class FooterManger implements Observer {
 				case ConstantValues.VIEW_HALL:
 					showCommonBottom();
 					break;
+				case ConstantValues.VIEW_SHOPPING:
+					changeBottomVisiblity(View.GONE);
 				default:
 					break;
 				}

@@ -4,8 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
+import jamffy.example.lotterydemo.bean.ShoppingCart;
+import jamffy.example.lotterydemo.bean.Ticket;
+import jamffy.example.lotterydemo.engine.CommInfoEngine;
+import jamffy.example.lotterydemo.net.NetUtils;
+import jamffy.example.lotterydemo.net.protocal.Element;
+import jamffy.example.lotterydemo.net.protocal.Message;
+import jamffy.example.lotterydemo.net.protocal.Oelement;
+import jamffy.example.lotterydemo.net.protocal.element.CurrentIssueElement;
+import jamffy.example.lotterydemo.util.BeanFactory;
+import jamffy.example.lotterydemo.util.PromptManager;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
@@ -23,10 +35,13 @@ import view.adapter.PoolAdapter;
 import view.custom.MyGridView;
 import view.custom.MyGridView.OnActionUpListener;
 import view.manager.BaseUI;
+import view.manager.FooterManger;
+import view.manager.MiddleManager;
+import view.manager.PlayGame;
 import view.manager.TitleManger;
 import view.sensor.ShakeListener;
 
-public class PlaySSQ extends BaseUI {
+public class PlaySSQ extends BaseUI implements PlayGame {
 
 	// 机选
 	private Button randomRed;
@@ -95,6 +110,7 @@ public class PlaySSQ extends BaseUI {
 					// 需要强转，把选中的号作为对象传入
 					blueList.remove((Object) (position + 1));
 				}
+				changeBottomNotice();
 			}
 
 		});
@@ -111,6 +127,7 @@ public class PlaySSQ extends BaseUI {
 					child.setBackgroundResource(R.drawable.id_defalut_ball);
 					redList.remove((Object) (position + 1));
 				}
+				changeBottomNotice();
 			}
 		});
 
@@ -127,18 +144,19 @@ public class PlaySSQ extends BaseUI {
 		case R.id.ii_ssq_random_red:
 			randomRed();
 			break;
-
 		default:
 			break;
 		}
+		changeBottomNotice();
 		super.onClick(v);
 	}
 
 	private void randomRed() {
 		redList.clear();
+		// 产生1~33 6个随机数
 		Random random = new Random();
-		while (redList.size() < 6) {
-			int num = random.nextInt(33) + 1;
+		while (redList.size() < ConstantValues.SSQ_EACH_RED) {
+			int num = random.nextInt(ConstantValues.RED_POOL_NUM) + 1;
 			if (redList.contains(num)) {
 				continue;
 			}
@@ -151,8 +169,8 @@ public class PlaySSQ extends BaseUI {
 		blueList.clear();
 		// 产生1~16 1个随机数
 		Random random = new Random();
-		while (blueList.size() < 1) {
-			int num = random.nextInt(16) + 1;
+		while (blueList.size() < ConstantValues.SSQ_EACH_BLUE) {
+			int num = random.nextInt(ConstantValues.BLUE_POOL_NUM) + 1;
 			blueList.add(num);
 		}
 		// 让对应的球变色
@@ -173,6 +191,7 @@ public class PlaySSQ extends BaseUI {
 			public void doAfterShake() {
 				randomBlue();
 				randomRed();
+				changeBottomNotice();
 			}
 		};
 
@@ -208,13 +227,190 @@ public class PlaySSQ extends BaseUI {
 	}
 
 	/**
+	 * 修改底部导航的信息
+	 */
+	private void changeBottomNotice() {
+		String text = getContext().getString(R.string.is_need_to_chose);
+		String redball = getContext().getString(R.string.is_ball_red);
+		String blueball = getContext().getString(R.string.is_ball_blue);
+		if (redList.size() < ConstantValues.SSQ_EACH_RED) {
+			text = StringUtils.replace(text, "NUM", ""
+					+ (ConstantValues.SSQ_EACH_RED - redList.size()))
+					+ redball;
+		} else {
+			if (blueList.size() < ConstantValues.SSQ_EACH_BLUE) {
+				text = StringUtils.replace(text, "NUM", ""
+						+ (ConstantValues.SSQ_EACH_BLUE - blueList.size()))
+						+ blueball;
+			} else {
+				// 显示投注信息
+				text = getContext().getString(R.string.is_play_bottom_title);
+				int stakeNum = calStakeNum();
+				text = StringUtils.replaceEach(text, new String[] { "NUM",
+						"MONEY" }, new String[] { stakeNum + "",
+						"" + stakeNum * 2 });
+			}
+		}
+
+		FooterManger.getInstance().changeGameBottomNotice(text);
+	}
+
+	/**
+	 * 计算彩票的注数
+	 */
+	private int calStakeNum() {
+		int redNum = (int) (factorial(redList.size()) / ((factorial(ConstantValues.SSQ_EACH_RED)) * (factorial(redList
+				.size() - ConstantValues.SSQ_EACH_RED))));
+		int blueNum = (int) (factorial(blueList.size()) / ((factorial(ConstantValues.SSQ_EACH_BLUE)) * (factorial(blueList
+				.size() - ConstantValues.SSQ_EACH_BLUE))));
+		return redNum * blueNum;
+	}
+
+	/**
+	 * 阶乘
+	 * 
+	 * @param num
+	 * @return
+	 */
+	private long factorial(int num) {
+		if (num > 1) {
+			return num * factorial(num - 1);
+		} else if (num == 1 || num == 0) {
+			return 1;
+		} else {
+			// 抛出参数异常
+			throw new IllegalArgumentException("num must >=0");
+		}
+	}
+
+	/**
 	 * 清除资源（list变量等）
 	 */
-	private void clear() {
+	@Override
+	public void clear() {
 		redList.clear();
 		blueList.clear();
+		changeBottomNotice();
+		changTitleContent();
 		redAdapter.notifyDataSetChanged();
 		blueAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void done() {
+		// ①判断：用户是否选择了一注投注
+		if (isAtLeastSelectOne()) {
+			// 一个购物车中，只能放置一个彩种，当前期的投注信息
+			// ②判断：是否获取到了当前销售期的信息
+			if (getBundle() != null && getBundle().get("ssqissue") != null) {
+				// ③封装用户的投注信息：红球、蓝球、注数
+				Ticket ticket = new Ticket();
+				StringBuffer redbuffer = new StringBuffer();
+				for (Integer item : redList) {
+					redbuffer.append(" ").append(item.toString());
+				}
+				ticket.setRedNum(redbuffer.substring(1));
+
+				StringBuffer bluebuffer = new StringBuffer();
+				for (Integer item : blueList) {
+					bluebuffer.append(" ").append(item.toString());
+				}
+				ticket.setBlueNum(bluebuffer.substring(1));
+
+				ticket.setNum(calStakeNum());
+				// ④创建彩票购物车，将投注信息添加到购物车中
+				ShoppingCart.getInstance().getTickets().add(ticket);
+
+				// ⑤设置彩种的标示，设置彩种期次
+				ShoppingCart.getInstance().setLotteryid(ConstantValues.SSQ);
+				ShoppingCart.getInstance().setIssue(
+						getBundle().getString("ssqissue"));
+				// ⑥界面跳转——购物车展示
+				MiddleManager.getInstance().changeUI(ShoppingUI.class,
+						getBundle());
+			} else {
+				// 重新获取
+				getCurrentIssusInfo();
+			}
+
+		} else {
+			// 提示：需要选择一注
+			PromptManager.showToast(getContext(), "需要选择一注");
+		}
+
+	}
+
+	/**
+	 * 判断用户是否至少选了一注
+	 * 
+	 * @return
+	 */
+	private boolean isAtLeastSelectOne() {
+		if (redList.size() >= ConstantValues.SSQ_EACH_RED
+				&& blueList.size() >= ConstantValues.SSQ_EACH_BLUE) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 获取当前销售期信息
+	 */
+	private void getCurrentIssusInfo() {
+		new MyHttpTask<Integer>() {
+
+			@Override
+			protected void onPreExecute() {
+				if (NetUtils.checkNet(getContext())) {
+					PromptManager.showProgressDialog(getContext());
+				} else {
+					PromptManager.showNoNetWork(getContext());
+				}
+				super.onPreExecute();
+			}
+
+			/**
+			 * 获取xml数据
+			 */
+			@Override
+			protected Message doInBackground(Integer... params) {
+				CommInfoEngine engine = BeanFactory
+						.getImp(CommInfoEngine.class);
+				return engine.getCurrentIssueInfo(params[0]);
+			}
+
+			/**
+			 * 判断获取的数据
+			 */
+			@Override
+			protected void onPostExecute(Message result) {
+				PromptManager.closeProgressDialog();
+				if (result != null) {
+					Oelement oelement = result.getBody().getOelement();
+					if (ConstantValues.SUCCESS.equals(oelement.getErrorcode())) {
+
+						CurrentIssueElement element = (CurrentIssueElement) result
+								.getBody().getElements().get(0);
+						String issue = element.getIssue();
+
+						// 向BaseUI设置bundle信息
+						Bundle bundle = new Bundle();
+						bundle.putString("ssqissue", issue);
+						setBundle(bundle);
+						changTitleContent();
+					} else {
+						PromptManager.showToast(getContext(),
+								oelement.getErrormsg());
+					}
+
+				} else {
+					System.out.println("服务器忙，请稍后再试...");
+					PromptManager.showToast(getContext(), "服务器忙，请稍后再试...");
+				}
+				super.onPostExecute(result);
+			}
+
+		}.executeProxy(ConstantValues.SSQ);
 	}
 
 }
