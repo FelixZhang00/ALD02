@@ -1,13 +1,12 @@
 package jamffy.example.lotterydemo.util;
 
+import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-
 
 import view.manager.BaseUI;
 
@@ -20,7 +19,8 @@ import view.manager.BaseUI;
  * @param <V>
  */
 public class SoftMap<K, V> extends HashMap<K, V> {
-	// 降低对象的引用界别——V
+	// 降低对象的引用界别——V 容易被GC清除，
+	// 所以在get时需要判断V是否还存在，下面的很多代码都是为了达到这样的目的
 
 	/**
 	 * 增强版的袋子，增加了key，方便清理操作
@@ -31,6 +31,7 @@ public class SoftMap<K, V> extends HashMap<K, V> {
 	 * @param <V>
 	 */
 	private class SoftValue<K, V> extends SoftReference<V> {
+		// 降低对象的引用界别——V
 		private Object key;
 
 		public SoftValue(K key, V r, ReferenceQueue<? super V> q) {

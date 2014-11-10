@@ -74,11 +74,11 @@ public class MiddleManager extends Observable {
 	static {
 		// 16M，如果不足<16M(模拟器)
 		// 32M，真机
-		if (MemoryManager.hasAcailMemory()) {
-			viewMap = new HashMap<String, BaseUI>();
-		} else {
-			viewMap = new SoftMap<String, BaseUI>();
-		}
+		// if (MemoryManager.hasAcailMemory()) {
+		// viewMap = new HashMap<String, BaseUI>();
+		// } else {
+		viewMap = new SoftMap<String, BaseUI>();
+		// }
 	}
 
 	/**
