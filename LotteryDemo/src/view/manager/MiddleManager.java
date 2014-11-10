@@ -9,7 +9,9 @@ import java.util.Observable;
 import jamffy.example.lotterydemo.ConstantValues;
 import jamffy.example.lotterydemo.R;
 import jamffy.example.lotterydemo.util.FadeUtil;
+import jamffy.example.lotterydemo.util.MemoryManager;
 import jamffy.example.lotterydemo.util.PromptManager;
+import jamffy.example.lotterydemo.util.SoftMap;
 import view.HallUI;
 import view.PlaySSQ;
 import view.manager.deprecated.SecondUI;
@@ -67,7 +69,17 @@ public class MiddleManager extends Observable {
 	/**
 	 * 如果中间容器对象创建过了，就在此登个记. 如果手机内存空间不够了，还需要其他的解决方法
 	 */
-	private Map<String, BaseUI> viewMap = new HashMap<String, BaseUI>();
+	private static Map<String, BaseUI> viewMap;
+
+	static {
+		// 16M，如果不足<16M(模拟器)
+		// 32M，真机
+		if (MemoryManager.hasAcailMemory()) {
+			viewMap = new HashMap<String, BaseUI>();
+		} else {
+			viewMap = new SoftMap<String, BaseUI>();
+		}
+	}
 
 	/**
 	 * 通过字节码标示，避免了重复创建对象

@@ -38,7 +38,7 @@ public interface ConstantValues {
 	/**
 	 * 服务器地址
 	 */
-	String LOTTERY_URI = "http://10.71.104.146:8080/MyZCWService/Entrance";
+	String LOTTERY_URI = "http://10.61.223.140:8080/MyZCWService/Entrance";
 
 	/******* 各种界面的ID *********/
 	int VIEW_FIRST = 1;
